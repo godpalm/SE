@@ -28,7 +28,7 @@ import {
   
   import { UserInterface } from "../../../../../interfaces/User";
   
-  import { CreateAdmin, CreateUser } from "../../../../../services/https";
+  import { CreateAdmin } from "../../../../../services/https";
   
   import { useNavigate, Link } from "react-router-dom";
   

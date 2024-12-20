@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../../App.css";
 import { HomeOutlined, UsergroupAddOutlined, PercentageOutlined } from "@ant-design/icons";
@@ -21,7 +21,7 @@ const AdminLayout: React.FC = () => {
 
   const page = localStorage.getItem("page");
   const [messageApi, contextHolder] = message.useMessage();
-  const [collapsed, setCollapsed] = useState(false);
+//   const [collapsed, setCollapsed] = useState(false);
 
   const {
     token: { colorBgContainer },

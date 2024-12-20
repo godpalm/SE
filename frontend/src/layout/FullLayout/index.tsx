@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../../App.css";
 import { UserOutlined, DashboardOutlined } from "@ant-design/icons";
@@ -14,7 +14,7 @@ const { Header, Content, Footer } = Layout;
 const FullLayout: React.FC = () => {
   const page = localStorage.getItem("page");
   const [messageApi, contextHolder] = message.useMessage();
-  const [collapsed, setCollapsed] = useState(false);
+//   const [collapsed, setCollapsed] = useState(false);
 
   const {
     token: { colorBgContainer },

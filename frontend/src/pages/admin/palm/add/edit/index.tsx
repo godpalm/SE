@@ -22,8 +22,6 @@ import {
 
     DatePicker,
 
-    InputNumber,
-
 } from "antd";
 
 import { PlusOutlined } from "@ant-design/icons";

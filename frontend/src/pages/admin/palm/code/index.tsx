@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Space, Table, Button, Col, Row, Divider, Modal, message } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined, AlignCenterOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { GetCodes, DeleteCodeById } from "../../../../services/https";
 import { CodeInterface } from "../../../../interfaces/Code";
@@ -19,7 +19,7 @@ function Codes() {
       dataIndex: "code_picture",
       key: "code_picture",
       width: "15%",
-      render: (text, record, index) => (
+      render: ( record ) => (
         <img src={record.code_picture} className="w3-left w3-circle w3-margin-right" width="100%" />
       )
     },
@@ -64,7 +64,7 @@ function Codes() {
       dataIndex: "Manage",
       key: "manage",
       width: 200,
-      render: (text, record, index) => (
+      render: ( record ) => (
         <>
           <Button
             onClick={() => navigate(`/code/edit/${record.ID}`)}
