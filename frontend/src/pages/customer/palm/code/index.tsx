@@ -114,7 +114,7 @@ function UserCodes() {
               </p>
               <p>
                 <strong>สิ้นสุด:</strong>{" "}
-                {dayjs(code.date_end).format("DD/MM/YYYY")}
+                {dayjs(code.date_end).format("DDMM/YYYY")}
               </p>
               <Button
                 type="primary"
