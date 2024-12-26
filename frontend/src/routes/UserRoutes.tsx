@@ -17,8 +17,12 @@ const CreateCustomer = Loadable(lazy(() => import("../pages/customer/palm/custom
 
 const EditCustomer = Loadable(lazy(() => import("../pages/customer/palm/customer/edit")));
 
+const UserCodes = Loadable(lazy(() => import("../pages/customer/palm/code")));
+
+
 
 const UserRoutes = (isLoggedIn: boolean): RouteObject => {
+  
     return {
       path: "/",
       element: isLoggedIn ? <UserLayout /> : <MainPages />,
@@ -43,6 +47,10 @@ const UserRoutes = (isLoggedIn: boolean): RouteObject => {
               element: <EditCustomer />,
             },
           ],
+        },
+        {
+          path: "/code",
+          element: <UserCodes />,
         },
       ],
     };

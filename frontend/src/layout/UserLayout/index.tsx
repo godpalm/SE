@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb, Layout, Menu, theme, Button, message } from "antd";
+import { Breadcrumb, Layout, Menu, theme, message, Dropdown, Avatar } from "antd";
 import { UserOutlined, DashboardOutlined } from "@ant-design/icons";
 import { Link, Routes, Route } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
@@ -10,13 +10,13 @@ import Customer from "../../pages/customer/palm/customer";
 import CustomerCreate from "../../pages/customer/palm/customer/create";
 import CustomerEdit from "../../pages/customer/palm/customer/edit";
 
+import UserCodes from "../../pages/customer/palm/code";
+
 const { Header, Content, Footer } = Layout;
 
 const UserLayout: React.FC = () => {
-
     const page = localStorage.getItem("page");
     const [messageApi, contextHolder] = message.useMessage();
-    // const [collapsed, setCollapsed] = useState(false);
 
     const {
         token: { colorBgContainer },
@@ -33,6 +33,21 @@ const UserLayout: React.FC = () => {
             location.href = "/";
         }, 2000);
     };
+
+    const profileMenu = (
+        <Menu>
+            <Menu.Item key="profile">
+                <Link to="/profile">
+                    <UserOutlined />
+                    <span>แก้ไขข้อมูลส่วนตัว</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="logout" onClick={Logout}>
+                <span style={{ color: "red" }}>ออกจากระบบ</span>
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
@@ -56,9 +71,21 @@ const UserLayout: React.FC = () => {
                                     <span>ข้อมูลสมาชิก</span>
                                 </Link>
                             </Menu.Item>
+                            <Menu.Item key="code" onClick={() => setCurrentPage("code")}>
+                                <Link to="/code">
+                                    <UserOutlined />
+                                    <span>collect code</span>
+                                </Link>
+                            </Menu.Item>
                         </Menu>
                     </div>
-                    <Button onClick={Logout}>ออกจากระบบ</Button>
+                    <Dropdown overlay={profileMenu} placement="bottomRight">
+                        <Avatar
+                            size="large"
+                            icon={<UserOutlined />}
+                            style={{ cursor: "pointer" }}
+                        />
+                    </Dropdown>
                 </Header>
 
                 <Content style={{ margin: "0 16px" }}>
@@ -75,12 +102,14 @@ const UserLayout: React.FC = () => {
                             <Route path="/customer" element={<Customer />} />
                             <Route path="/customer/create" element={<CustomerCreate />} />
                             <Route path="/customer/edit/:id" element={<CustomerEdit />} />
+
+                            <Route path="/code" element={<UserCodes />} />
                         </Routes>
                     </div>
                 </Content>
 
                 <Footer style={{ textAlign: "center" }}>
-                    System Analysis and Design 1/67
+                    IGOTSOFAR 555
                 </Footer>
             </Layout>
         </Layout>
