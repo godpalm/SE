@@ -19,7 +19,7 @@ function Codes() {
       dataIndex: "code_picture",
       key: "code_picture",
       width: "15%",
-      render: ( record ) => (
+      render: (text, record, index) => (
         <img src={record.code_picture} className="w3-left w3-circle w3-margin-right" width="100%" />
       )
     },
@@ -64,7 +64,7 @@ function Codes() {
       dataIndex: "Manage",
       key: "manage",
       width: 200,
-      render: ( record ) => (
+      render: (text, record, index) => (
         <>
           <Button
             onClick={() => navigate(`/code/edit/${record.ID}`)}
@@ -152,96 +152,96 @@ function Codes() {
   
 
   return (
-    <>
-      {contextHolder}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh", // already correct for full viewport height
-          width: "100vw",     // add full viewport width
-          padding: "0",       // remove padding to maximize space
-          background: "white",
-          margin: 0,          // remove any default margins
-          boxSizing: "border-box" // ensure padding and border are included in width/height
-        }}
-      >
-        <div style={{ width: "100%", maxWidth: "1200px" }}> {/* จำกัดความกว้าง */}
-          {/* Header Section */}
-          <Row
-            style={{
-              background: "#ffffff",
-              padding: "15px 20px",
-              borderRadius: "15px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <Col span={12}>
-              <h2 style={{ margin: 0, color: "#333" }}>จัดการข้อมูลโค้ดส่วนลด</h2>
-            </Col>
-            <Col span={12} style={{ textAlign: "end", alignSelf: "center" }}>
-              <Space>
-                <Link to="/code/create">
-                  <Button
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    style={{
-                      backgroundColor: "#1890ff",
-                      borderColor: "#1890ff",
-                      color: "#fff",
-                    }}
-                  >
-                    เพิ่มโค้ด
-                  </Button>
-                </Link>
-              </Space>
-            </Col>
-          </Row>
-  
-          {/* Divider */}
-          <Divider style={{ margin: "20px 0" }} />
-  
-          {/* Table Section */}
-          <div
-            style={{
-              marginTop: 20,
-              background: "#ffffff",
-              padding: "20px",
-              borderRadius: "50px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <Table
-              rowKey="ID"
-              columns={columns}
-              dataSource={Array.isArray(codes) ? codes : []}
-              style={{ background: "#ffffff" }}
-              size="middle"
-            />
-          </div>
-  
-          {/* Modal Section */}
-          <Modal
-            title={
-              <span style={{ fontWeight: "bold", color: "#ff4d4f" }}>
-                ลบข้อมูล ?
-              </span>
-            }
-            open={open}
-            onOk={handleOk}
-            confirmLoading={confirmLoading}
-            onCancel={handleCancel}
-            okText="ยืนยัน"
-            cancelText="ยกเลิก"
-            okButtonProps={{ danger: true }}
-          >
-            <p style={{ fontSize: "16px", color: "#555" }}>{modalText}</p>
-          </Modal>
+  <>
+    {contextHolder}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh", // ทำให้ container ครอบคลุมเต็มจอ
+        background: "#f0f2f5", // เพิ่มสีพื้นหลังเพื่อแยกชั้น
+        padding: "20px", // เพิ่มระยะห่าง
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{ width: "100%", maxWidth: "1200px" }}>
+        {/* Header Section */}
+        <Row
+          style={{
+            background: "#ffffff",
+            padding: "15px 20px",
+            borderRadius: "15px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          }}
+        >
+          <Col span={12}>
+            <h2 style={{ margin: 0, color: "#333" }}>จัดการข้อมูลโค้ดส่วนลด</h2>
+          </Col>
+          <Col span={12} style={{ textAlign: "end", alignSelf: "center" }}>
+            <Space>
+              <Link to="/code/create">
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  style={{
+                    backgroundColor: "#1890ff",
+                    borderColor: "#1890ff",
+                    color: "#fff",
+                  }}
+                >
+                  เพิ่มโค้ด
+                </Button>
+              </Link>
+            </Space>
+          </Col>
+        </Row>
+
+        {/* Divider */}
+        <Divider style={{ margin: "20px 0" }} />
+
+        {/* Table Section */}
+        <div
+          style={{
+            marginTop: 20,
+            background: "#ffffff",
+            padding: "20px",
+            borderRadius: "15px", // ลดความโค้งของขอบเล็กน้อย
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          }}
+        >
+          <Table
+            rowKey="ID"
+            columns={columns}
+            dataSource={Array.isArray(codes) ? codes : []}
+            style={{ background: "#ffffff" }}
+            size="middle"
+          />
         </div>
+
+        {/* Modal Section */}
+        <Modal
+          title={
+            <span style={{ fontWeight: "bold", color: "#ff4d4f" }}>
+              ลบข้อมูล ?
+            </span>
+          }
+          open={open}
+          onOk={handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={handleCancel}
+          okText="ยืนยัน"
+          cancelText="ยกเลิก"
+          okButtonProps={{ danger: true }}
+        >
+          <p style={{ fontSize: "16px", color: "#555" }}>{modalText}</p>
+        </Modal>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
+
   
 }
 

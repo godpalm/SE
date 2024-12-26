@@ -184,6 +184,40 @@ async function DeleteUsersById(id: string) {
 
 }
 
+async function UpdateCodeAfterCollect(codeId: string) {
+
+  return await axios
+
+    .put(`${apiUrl}/code-collect/${codeId}`, {}, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+}
+
+async function AddCodeToCollect(userId: string, codeId: string) {
+
+  return await axios
+
+    .post(`${apiUrl}/code-collect/${userId}/${codeId}`, {}, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+}
+
+async function GetCollectedCodes(userId: string) {
+
+  return await axios
+
+    .get(`${apiUrl}/code-collect/${userId}`, requestOptions)
+
+    .then((res) => res)
+    
+    .catch((e) => e.response);
+}
+
+
 
 
 export {
@@ -201,6 +235,8 @@ export {
     GetUsersById,
     UpdateUsersById,
     DeleteUsersById,
-    
+    UpdateCodeAfterCollect,
+    AddCodeToCollect,
+    GetCollectedCodes
 
 };

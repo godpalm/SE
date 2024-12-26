@@ -1,7 +1,7 @@
 package codes
 
 import (
-
+	"strconv"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -121,3 +121,84 @@ func DeleteCode(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Deleted successful"})
 
 }
+
+func UpdateCodeAfterCollect(c *gin.Context) {
+
+    id := c.Param("id")
+	db := config.DB()
+    var code entity.Codes
+
+    if err := db.First(&code, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Code not found"})
+        return
+    }
+
+    // ลดจำนวนโค้ดหรืออัปเดตสถานะโค้ด
+    code.Quantity -= 1
+    if code.Quantity < 0 {
+        code.Quantity = 0
+    }
+
+    db.Save(&code)
+
+    c.JSON(http.StatusOK, code)
+}
+
+func AddCodeToCollect(c *gin.Context) {
+    userIDStr := c.Param("userId")
+    codeIDStr := c.Param("codeId")
+
+    userID, err := strconv.ParseUint(userIDStr, 10, 32)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+        return
+    }
+
+    codeID, err := strconv.ParseUint(codeIDStr, 10, 32)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid code ID"})
+        return
+    }
+
+    db := config.DB()
+
+    // ตรวจสอบว่ามีข้อมูลนี้อยู่ในระบบแล้วหรือไม่
+    var existingCollect entity.CodeCollectors
+    if err := db.Where("user_id = ? AND code_id = ?", uint(userID), uint(codeID)).First(&existingCollect).Error; err == nil {
+        c.JSON(http.StatusConflict, gin.H{"message": "Code already collected"})
+        return
+    }
+
+    collect := entity.CodeCollectors{
+        UserID: uint(userID),
+        CodeID: uint(codeID),
+    }
+
+    if err := db.Create(&collect).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to save code collect"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Code collected successfully", "data": collect})
+}
+
+func GetCollectedCodes(c *gin.Context) {
+    userId := c.Param("userId")
+    
+    // Query or process the collected codes for the given userId
+    db := config.DB()
+    var collectedCodes []entity.CodeCollectors
+    if err := db.Where("user_id = ?", userId).Find(&collectedCodes).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "No codes collected for user"})
+        return
+    }
+
+    c.JSON(http.StatusOK, collectedCodes)
+}
+
+
+
+
+
+
+

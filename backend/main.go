@@ -67,12 +67,20 @@ func main() {
        router.GET("/codes/:id", codes.GetCodeById)     
 	   router.POST("/codes", codes.CreateCode)    // สร้าง Code ใหม่
 	   router.PUT("/codes/:id", codes.UpdateCode)  // อัปเดต Code ตาม ID
+       router.PUT("/code-collect/:id", codes.UpdateCodeAfterCollect)
 	   router.DELETE("/codes/:id", codes.DeleteCode)
+       router.POST("/code-collect/:userId/:codeId", codes.AddCodeToCollect)
+       router.GET("/code-collect/:userId", codes.GetCollectedCodes)
+    
+
+
 
        router.PUT("/user/:id", users.Update)
        router.GET("/users", users.GetAll)
        router.GET("/user/:id", users.Get)
        router.DELETE("/user/:id", users.Delete)
+
+       
 
        router.GET("/admins", users.GetAdmin)
 
